@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
 {
+    public static HUDController Instance;
+
     [Header("Barras de salud heroes")]
     public Slider barraHeroe1;
     public Slider barraHeroe2;
@@ -34,6 +36,8 @@ public class HUDController : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
+        
         if (panelNotificacion != null)
         {
             panelNotificacion.SetActive(false);

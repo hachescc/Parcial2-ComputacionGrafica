@@ -96,6 +96,8 @@ public class SistemaCombate : MonoBehaviour
             resultadoUltimaAccion = "Error — " + personajeActual.nombre + " falló el ataque";
             RegistrarAccion(resultadoUltimaAccion);
             Debug.Log(resultadoUltimaAccion);
+            if (HUDController.Instance != null)
+                HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
             TerminarTurno();
             return;
         }
@@ -115,6 +117,8 @@ public class SistemaCombate : MonoBehaviour
                 combateActivo = false;
                 RegistrarAccion(resultadoUltimaAccion);
                 Debug.Log(resultadoUltimaAccion);
+                if (HUDController.Instance != null)
+                    HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
                 StartCoroutine(TerminarCombate(true));
                 return;
             }
@@ -126,6 +130,8 @@ public class SistemaCombate : MonoBehaviour
 
         RegistrarAccion(resultadoUltimaAccion);
         Debug.Log(resultadoUltimaAccion);
+        if (HUDController.Instance != null)
+            HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
         TerminarTurno();
     }
 
@@ -140,6 +146,8 @@ public class SistemaCombate : MonoBehaviour
             resultadoUltimaAccion = "Error — " + enemigo.nombre + " falló el ataque";
             RegistrarAccion(resultadoUltimaAccion);
             Debug.Log(resultadoUltimaAccion);
+            if (HUDController.Instance != null)
+                HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
             TerminarTurno();
             return;
         }
@@ -164,6 +172,8 @@ public class SistemaCombate : MonoBehaviour
             {
                 combateActivo = false;
                 RegistrarAccion(resultadoUltimaAccion);
+                if (HUDController.Instance != null)
+                    HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
                 StartCoroutine(TerminarCombate(false));
                 return;
             }
@@ -175,6 +185,8 @@ public class SistemaCombate : MonoBehaviour
 
         RegistrarAccion(resultadoUltimaAccion);
         Debug.Log(resultadoUltimaAccion);
+        if (HUDController.Instance != null)
+            HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
         TerminarTurno();
     }
 

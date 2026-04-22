@@ -20,6 +20,12 @@ public class IABoss : MonoBehaviour
     public float porcentajeRegenerar = 0.30f;
     public float cantidadRegeneracion = 20f;
 
+    [Header("Drops de Lupus")]
+    public int minCofres = 2;
+    public int maxCofres = 6;
+    public int minDinero = 500;
+    public int maxDinero = 1500;
+
     private Stack<string> logAcciones = new Stack<string>();
 
     void Awake()
@@ -52,7 +58,6 @@ public class IABoss : MonoBehaviour
             yield break;
         }
 
-        // Lupus decide si regenerar salud primero
         float porcentajeSalud = lupus.saludActual / lupus.resistencia;
         if (porcentajeSalud < porcentajeRegenerar)
         {
@@ -60,15 +65,15 @@ public class IABoss : MonoBehaviour
             resultadoUltimaAccion = "Lupus usó regeneración — salud: " + lupus.saludActual;
             RegistrarAccion(resultadoUltimaAccion);
             Debug.Log(resultadoUltimaAccion);
+            if (HUDController.Instance != null)
+                HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
             StartCoroutine(TurnoBoss());
             yield break;
         }
 
-        // Tirada de IA
         int tirada = Random.Range(1, 11);
         Debug.Log("Tirada IA Boss: " + tirada);
 
-        // Helena viva
         if (helena != null && helena.estaVivo)
         {
             if (tirada > 7 && tirada <= 9)
@@ -76,6 +81,8 @@ public class IABoss : MonoBehaviour
                 resultadoUltimaAccion = "Pifia — Helena no ataca este turno";
                 RegistrarAccion(resultadoUltimaAccion);
                 Debug.Log(resultadoUltimaAccion);
+                if (HUDController.Instance != null)
+                    HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
             }
             else if (tirada < 7 && tirada > 0)
             {
@@ -83,16 +90,18 @@ public class IABoss : MonoBehaviour
                 resultadoUltimaAccion = AplicarDañoAHeroe(helena.nombre, daño);
                 RegistrarAccion(resultadoUltimaAccion);
                 Debug.Log(resultadoUltimaAccion);
+                if (HUDController.Instance != null)
+                    HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
             }
             else
             {
-                // Tirada 7 o 10 — no está en los rangos, se trata como pifia
                 resultadoUltimaAccion = "Pifia — Helena no ataca (tirada: " + tirada + ")";
                 RegistrarAccion(resultadoUltimaAccion);
                 Debug.Log(resultadoUltimaAccion);
+                if (HUDController.Instance != null)
+                    HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
             }
         }
-        // Helena muerta — ataca Lupus directamente
         else
         {
             if (tirada > 7 && tirada <= 9)
@@ -100,29 +109,34 @@ public class IABoss : MonoBehaviour
                 resultadoUltimaAccion = "Pifia — Lupus no ataca este turno";
                 RegistrarAccion(resultadoUltimaAccion);
                 Debug.Log(resultadoUltimaAccion);
+                if (HUDController.Instance != null)
+                    HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
             }
             else if (tirada < 7 && tirada > 0)
             {
-                // Lupus elige aleatoriamente entre Ataque1 y Ataque2
                 int ataqueElegido = Random.Range(0, 2);
                 int daño;
                 if (ataqueElegido == 0)
                 {
-                    daño = Random.Range(1, 5) + Random.Range(1, 7); // 1D4 + 1D6
+                    daño = Random.Range(1, 5) + Random.Range(1, 7);
                 }
                 else
                 {
-                    daño = Random.Range(1, 7) + Random.Range(1, 7); // 2D6
+                    daño = Random.Range(1, 7) + Random.Range(1, 7);
                 }
                 resultadoUltimaAccion = AplicarDañoAHeroe(lupus.nombre, daño);
                 RegistrarAccion(resultadoUltimaAccion);
                 Debug.Log(resultadoUltimaAccion);
+                if (HUDController.Instance != null)
+                    HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
             }
             else
             {
                 resultadoUltimaAccion = "Pifia — Lupus no ataca (tirada: " + tirada + ")";
                 RegistrarAccion(resultadoUltimaAccion);
                 Debug.Log(resultadoUltimaAccion);
+                if (HUDController.Instance != null)
+                    HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
             }
         }
 
@@ -164,7 +178,18 @@ public class IABoss : MonoBehaviour
 
         if (victoria)
         {
-            Debug.Log("Lupus derrotado — cargando escena Fin");
+            if (GameManager.Instance != null && GameManager.Instance.inventario != null)
+            {
+                int cantidadCofres = Random.Range(minCofres, maxCofres + 1);
+                for (int i = 0; i < cantidadCofres; i++)
+                {
+                    GameManager.Instance.inventario.AgregarObjeto("cofre de oro");
+                }
+                GameManager.Instance.inventario.AgregarDinero(Random.Range(minDinero, maxDinero + 1));
+                Debug.Log("Lupus derrotado — cofres entregados: " + cantidadCofres);
+            }
+
+            Debug.Log("Cargando escena Fin");
             SceneManager.LoadScene("Fin");
         }
         else
