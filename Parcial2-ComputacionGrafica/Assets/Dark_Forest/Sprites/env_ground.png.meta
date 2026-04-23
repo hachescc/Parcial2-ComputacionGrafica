@@ -2703,7 +2703,6 @@ TextureImporter:
         - {x: 8, y: -8}
       physicsShape:
       - - {x: 8, y: 8}
-        - {x: 7, y: 8}
         - {x: -8, y: 0}
         - {x: -8, y: -8}
         - {x: 8, y: -8}
