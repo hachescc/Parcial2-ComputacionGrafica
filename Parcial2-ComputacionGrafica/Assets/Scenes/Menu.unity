@@ -374,11 +374,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GestorAudio
   musicaMenu: {fileID: 8300000, guid: 5185f22e853821a44adac60936ff8631, type: 3}
-  musicaPueblo: {fileID: 0}
-  musicaJuego: {fileID: 0}
-  musicaCombate: {fileID: 0}
-  musicaBoss: {fileID: 0}
-  musicaFin: {fileID: 0}
+  musicaPueblo: {fileID: 8300000, guid: 44af0d25e84d3dc4eb31b8da7ca85f76, type: 3}
+  musicaJuego: {fileID: 8300000, guid: a928721a2b60e0145a83daf98104b47a, type: 3}
+  musicaCombate: {fileID: 8300000, guid: 25e1c967499b99b4388884fa67a277ac, type: 3}
+  musicaBoss: {fileID: 8300000, guid: 2822361e951d7574084eb2612b4dcb5d, type: 3}
+  musicaFin: {fileID: 8300000, guid: 9dd0628827d6f894190161065445abde, type: 3}
   sonidoAtaque: {fileID: 0}
   "sonidoRecibirDa\xF1o": {fileID: 0}
   sonidoRecolectar: {fileID: 0}
