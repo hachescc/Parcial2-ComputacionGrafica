@@ -17,13 +17,19 @@ public class MovimientoJugadores : MonoBehaviour
     public Transform tHeroe3;
     public Transform tHeroe4;
 
+    [Header("Animators")]
+    public Animator animHeroe1;
+    public Animator animHeroe2;
+    public Animator animHeroe3;
+    public Animator animHeroe4;
+
     private float horizontal;
 
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-
         VoltearPersonajes();
+        ActualizarAnimaciones();
     }
 
     void FixedUpdate()
@@ -38,6 +44,21 @@ public class MovimientoJugadores : MonoBehaviour
     {
         if (rb == null) return;
         rb.linearVelocity = new Vector2(horizontal * velocidad, rb.linearVelocity.y);
+    }
+
+    void ActualizarAnimaciones()
+    {
+        bool corriendo = horizontal != 0;
+        ActualizarAnimator(animHeroe1, corriendo);
+        ActualizarAnimator(animHeroe2, corriendo);
+        ActualizarAnimator(animHeroe3, corriendo);
+        ActualizarAnimator(animHeroe4, corriendo);
+    }
+
+    void ActualizarAnimator(Animator anim, bool corriendo)
+    {
+        if (anim == null) return;
+        anim.SetBool("corriendo", corriendo);
     }
 
     void VoltearPersonajes()
