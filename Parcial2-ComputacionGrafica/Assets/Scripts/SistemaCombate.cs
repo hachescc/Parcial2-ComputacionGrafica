@@ -93,23 +93,27 @@ public class SistemaCombate : MonoBehaviour
 
         if (tiradaExito <= 3)
         {
-            resultadoUltimaAccion = "Error — " + personajeActual.nombre + " falló el ataque";
+            resultadoUltimaAccion = "Error — " + personajeActual.nombre + " fallo el ataque";
             RegistrarAccion(resultadoUltimaAccion);
             Debug.Log(resultadoUltimaAccion);
             if (HUDController.Instance != null)
                 HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
+            if (GestorAudio.Instance != null)
+                GestorAudio.Instance.ReproducirEfecto("pifia");
             TerminarTurno();
             return;
         }
 
-        int tiradaDaño = TiradaDano();
-        string evaluacion = EvaluarDano(tiradaDaño);
+        int tiradaDano = TiradaDano();
+        string evaluacion = EvaluarDano(tiradaDano);
         resultadoUltimaAccion = evaluacion;
 
-        if (evaluacion == "Daño")
+        if (evaluacion == "Dano")
         {
             enemigo.getDamage(25);
-            resultadoUltimaAccion = "Daño — " + personajeActual.nombre + " hizo 25 de daño";
+            resultadoUltimaAccion = "Dano — " + personajeActual.nombre + " hizo 25 de dano";
+            if (GestorAudio.Instance != null)
+                GestorAudio.Instance.ReproducirEfecto("ataque");
 
             if (!enemigo.estaVivo)
             {
@@ -119,6 +123,8 @@ public class SistemaCombate : MonoBehaviour
                 Debug.Log(resultadoUltimaAccion);
                 if (HUDController.Instance != null)
                     HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
+                if (GestorAudio.Instance != null)
+                    GestorAudio.Instance.ReproducirEfecto("muerte");
                 StartCoroutine(TerminarCombate(true));
                 return;
             }
@@ -143,27 +149,31 @@ public class SistemaCombate : MonoBehaviour
 
         if (tiradaExito <= 3)
         {
-            resultadoUltimaAccion = "Error — " + enemigo.nombre + " falló el ataque";
+            resultadoUltimaAccion = "Error — " + enemigo.nombre + " fallo el ataque";
             RegistrarAccion(resultadoUltimaAccion);
             Debug.Log(resultadoUltimaAccion);
             if (HUDController.Instance != null)
                 HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
+            if (GestorAudio.Instance != null)
+                GestorAudio.Instance.ReproducirEfecto("pifia");
             TerminarTurno();
             return;
         }
 
-        int tiradaDaño = TiradaDano();
-        string evaluacion = EvaluarDano(tiradaDaño);
+        int tiradaDano = TiradaDano();
+        string evaluacion = EvaluarDano(tiradaDano);
         resultadoUltimaAccion = evaluacion;
 
-        if (evaluacion == "Daño")
+        if (evaluacion == "Dano")
         {
             foreach (Personaje heroe in heroes)
             {
                 if (heroe != null && heroe.estaVivo)
                 {
                     heroe.getDamage(25);
-                    resultadoUltimaAccion = "Daño — " + enemigo.nombre + " hizo 25 de daño a " + heroe.nombre;
+                    resultadoUltimaAccion = "Dano — " + enemigo.nombre + " hizo 25 de dano a " + heroe.nombre;
+                    if (GestorAudio.Instance != null)
+                        GestorAudio.Instance.ReproducirEfecto("dano");
                     break;
                 }
             }
@@ -241,7 +251,7 @@ public class SistemaCombate : MonoBehaviour
     public string EvaluarDano(int tirada)
     {
         if (tirada >= 90) return "Pifia";
-        if (tirada >= 50) return "Daño";
+        if (tirada >= 50) return "Dano";
         return "Fallo";
     }
 

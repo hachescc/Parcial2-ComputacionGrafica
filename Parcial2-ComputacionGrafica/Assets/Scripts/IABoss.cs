@@ -44,6 +44,8 @@ public class IABoss : MonoBehaviour
     {
         combateBossActivo = true;
         Debug.Log("Combate Boss iniciado — Lupus y Helena atacan");
+        if (GestorAudio.Instance != null)
+            GestorAudio.Instance.ReproducirMusica("Boss");
         StartCoroutine(TurnoBoss());
     }
 
@@ -62,11 +64,13 @@ public class IABoss : MonoBehaviour
         if (porcentajeSalud < porcentajeRegenerar)
         {
             lupus.curar(cantidadRegeneracion);
-            resultadoUltimaAccion = "Lupus usó regeneración — salud: " + lupus.saludActual;
+            resultadoUltimaAccion = "Lupus uso regeneracion — salud: " + lupus.saludActual;
             RegistrarAccion(resultadoUltimaAccion);
             Debug.Log(resultadoUltimaAccion);
             if (HUDController.Instance != null)
                 HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
+            if (GestorAudio.Instance != null)
+                GestorAudio.Instance.ReproducirEfecto("ataque");
             StartCoroutine(TurnoBoss());
             yield break;
         }
@@ -83,11 +87,13 @@ public class IABoss : MonoBehaviour
                 Debug.Log(resultadoUltimaAccion);
                 if (HUDController.Instance != null)
                     HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
+                if (GestorAudio.Instance != null)
+                    GestorAudio.Instance.ReproducirEfecto("pifia");
             }
             else if (tirada < 7 && tirada > 0)
             {
-                int daño = Random.Range(1, 9) + Random.Range(1, 7);
-                resultadoUltimaAccion = AplicarDañoAHeroe(helena.nombre, daño);
+                int dano = Random.Range(1, 9) + Random.Range(1, 7);
+                resultadoUltimaAccion = AplicarDanoAHeroe(helena.nombre, dano);
                 RegistrarAccion(resultadoUltimaAccion);
                 Debug.Log(resultadoUltimaAccion);
                 if (HUDController.Instance != null)
@@ -100,6 +106,8 @@ public class IABoss : MonoBehaviour
                 Debug.Log(resultadoUltimaAccion);
                 if (HUDController.Instance != null)
                     HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
+                if (GestorAudio.Instance != null)
+                    GestorAudio.Instance.ReproducirEfecto("pifia");
             }
         }
         else
@@ -111,20 +119,22 @@ public class IABoss : MonoBehaviour
                 Debug.Log(resultadoUltimaAccion);
                 if (HUDController.Instance != null)
                     HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
+                if (GestorAudio.Instance != null)
+                    GestorAudio.Instance.ReproducirEfecto("pifia");
             }
             else if (tirada < 7 && tirada > 0)
             {
                 int ataqueElegido = Random.Range(0, 2);
-                int daño;
+                int dano;
                 if (ataqueElegido == 0)
                 {
-                    daño = Random.Range(1, 5) + Random.Range(1, 7);
+                    dano = Random.Range(1, 5) + Random.Range(1, 7);
                 }
                 else
                 {
-                    daño = Random.Range(1, 7) + Random.Range(1, 7);
+                    dano = Random.Range(1, 7) + Random.Range(1, 7);
                 }
-                resultadoUltimaAccion = AplicarDañoAHeroe(lupus.nombre, daño);
+                resultadoUltimaAccion = AplicarDanoAHeroe(lupus.nombre, dano);
                 RegistrarAccion(resultadoUltimaAccion);
                 Debug.Log(resultadoUltimaAccion);
                 if (HUDController.Instance != null)
@@ -137,6 +147,8 @@ public class IABoss : MonoBehaviour
                 Debug.Log(resultadoUltimaAccion);
                 if (HUDController.Instance != null)
                     HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
+                if (GestorAudio.Instance != null)
+                    GestorAudio.Instance.ReproducirEfecto("pifia");
             }
         }
 
@@ -150,14 +162,16 @@ public class IABoss : MonoBehaviour
         StartCoroutine(TurnoBoss());
     }
 
-    string AplicarDañoAHeroe(string atacante, int daño)
+    string AplicarDanoAHeroe(string atacante, int dano)
     {
         foreach (Personaje heroe in heroes)
         {
             if (heroe != null && heroe.estaVivo)
             {
-                heroe.getDamage(daño);
-                return "Daño — " + atacante + " hizo " + daño + " de daño a " + heroe.nombre;
+                heroe.getDamage(dano);
+                if (GestorAudio.Instance != null)
+                    GestorAudio.Instance.ReproducirEfecto("dano");
+                return "Dano — " + atacante + " hizo " + dano + " de dano a " + heroe.nombre;
             }
         }
         return "Sin objetivo";
@@ -194,7 +208,7 @@ public class IABoss : MonoBehaviour
         }
         else
         {
-            Debug.Log("Héroes derrotados — Game Over");
+            Debug.Log("Heroes derrotados — Game Over");
             SceneManager.LoadScene("Menu");
         }
     }

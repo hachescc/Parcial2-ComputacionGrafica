@@ -385,8 +385,8 @@ MonoBehaviour:
   sonidoRecolectar: {fileID: 8300000, guid: 66e7a895e1149b44ab9a210aaaa20dcd, type: 3}
   sonidoMuerteEnemigo: {fileID: 8300000, guid: 15c6f959c2bd1bc478f8cbc360250904, type: 3}
   sonidoPifia: {fileID: 8300000, guid: e7b3420a1be042b4d99e9f2f37064244, type: 3}
-  fuenteMusica: {fileID: 0}
-  fuenteEfectos: {fileID: 0}
+  fuenteMusica: {fileID: 214833438}
+  fuenteEfectos: {fileID: 214833437}
 --- !u!114 &214833440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,8 +449,8 @@ Transform:
   m_GameObject: {fileID: 573212982}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3572.9998}
-  m_LocalScale: {x: 78.18549, y: 78.18549, z: 78.18549}
+  m_LocalPosition: {x: 28.61, y: -15.62, z: -3572.9998}
+  m_LocalScale: {x: 206.47719, y: 206.47719, z: 206.47719}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1706994193}
@@ -756,10 +756,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 68863ee1e42edec4c8396a873448042e, type: 3}
-    m_FontSize: 27
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 4
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -812,8 +812,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 3}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 9.31, y: 37.5}
+  m_SizeDelta: {x: 791.35, y: 148.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &917023294
 MonoBehaviour:
@@ -980,10 +980,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 68863ee1e42edec4c8396a873448042e, type: 3}
-    m_FontSize: 26
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 4
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1128,8 +1128,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: -39}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 9.31, y: -170.22}
+  m_SizeDelta: {x: 791.35, y: 148.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1397240482
 MonoBehaviour:
