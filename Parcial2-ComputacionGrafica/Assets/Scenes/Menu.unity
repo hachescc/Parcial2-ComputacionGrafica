@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 214833438}
   - component: {fileID: 214833437}
   - component: {fileID: 214833436}
+  - component: {fileID: 214833441}
   m_Layer: 0
   m_Name: _Managers
   m_TagString: Untagged
@@ -379,11 +380,11 @@ MonoBehaviour:
   musicaCombate: {fileID: 8300000, guid: 25e1c967499b99b4388884fa67a277ac, type: 3}
   musicaBoss: {fileID: 8300000, guid: 2822361e951d7574084eb2612b4dcb5d, type: 3}
   musicaFin: {fileID: 8300000, guid: 9dd0628827d6f894190161065445abde, type: 3}
-  sonidoAtaque: {fileID: 0}
-  "sonidoRecibirDa\xF1o": {fileID: 0}
-  sonidoRecolectar: {fileID: 0}
-  sonidoMuerteEnemigo: {fileID: 0}
-  sonidoPifia: {fileID: 0}
+  sonidoAtaque: {fileID: 8300000, guid: 3f572fbdc891d4f4c837600dcdcdaf38, type: 3}
+  "sonidoRecibirDa\xF1o": {fileID: 8300000, guid: 993af6cc2b1ec934ebc5f96f94457b17, type: 3}
+  sonidoRecolectar: {fileID: 8300000, guid: 66e7a895e1149b44ab9a210aaaa20dcd, type: 3}
+  sonidoMuerteEnemigo: {fileID: 8300000, guid: 15c6f959c2bd1bc478f8cbc360250904, type: 3}
+  sonidoPifia: {fileID: 8300000, guid: e7b3420a1be042b4d99e9f2f37064244, type: 3}
   fuenteMusica: {fileID: 0}
   fuenteEfectos: {fileID: 0}
 --- !u!114 &214833440
@@ -409,6 +410,19 @@ MonoBehaviour:
   inventario: {fileID: 0}
   combateConBoss: 0
   heroesVivos: 0
+--- !u!114 &214833441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214833434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6f36daf443b7046a692fff56556e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicaEscena
+  nombreEscena: Menu
 --- !u!1 &573212982
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,9 +608,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1706994193}
   - {fileID: 917023293}
   - {fileID: 1397240481}
-  - {fileID: 1706994193}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

@@ -403,6 +403,7 @@ GameObject:
   - component: {fileID: 238507550}
   - component: {fileID: 238507551}
   - component: {fileID: 238507552}
+  - component: {fileID: 238507553}
   m_Layer: 0
   m_Name: _Managers
   m_TagString: Untagged
@@ -541,6 +542,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &238507553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238507549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6f36daf443b7046a692fff56556e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicaEscena
+  nombreEscena: Juego
 --- !u!1 &341301459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,7 +1790,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 12
-      m_TileSpriteIndex: 18
+      m_TileSpriteIndex: 25
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3376,7 +3390,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 14
-      m_TileSpriteIndex: 14
+      m_TileSpriteIndex: 18
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3665,8 +3679,8 @@ Tilemap:
     m_Data: {fileID: 1207126004, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
   - m_RefCount: 107
     m_Data: {fileID: -171188432, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 1578338595, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: -710368663, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
   - m_RefCount: 2
@@ -3674,7 +3688,7 @@ Tilemap:
   - m_RefCount: 2
     m_Data: {fileID: 1322812927, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: -486237538, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
+    m_Data: {fileID: 1578338595, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 25907252, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
   - m_RefCount: 2
@@ -3687,8 +3701,8 @@ Tilemap:
     m_Data: {fileID: -288413239, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -238351904, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -486237538, guid: 532d89cce32ef33469a10c43c44556ea, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 191
     m_Data:
