@@ -426,11 +426,11 @@ Transform:
   m_GameObject: {fileID: 114166688}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.2299999, y: 0.10000001, z: 0}
-  m_LocalScale: {x: 1.4455, y: 1.4455, z: 1.4455}
+  m_LocalPosition: {x: 32.361107, y: -1.13839, z: 0}
+  m_LocalScale: {x: 2.170032, y: 2.543265, z: 2.7231774}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 740052883}
+  m_Father: {fileID: 1388393815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &114166690
 SpriteRenderer:
@@ -485,8 +485,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 10.24, y: 5.76}
+  m_DrawMode: 2
+  m_Size: {x: 40, y: 2.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4c5467d209cb743bb31b069aeee5db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxMove
-  velMovi: {x: 0.25, y: 0}
+  velMovi: {x: 0.2, y: 0}
 --- !u!1 &212435715
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,11 +846,11 @@ Transform:
   m_GameObject: {fileID: 386447625}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.2299999, y: 0.10000001, z: 0}
-  m_LocalScale: {x: 1.4455, y: 1.4455, z: 1.4455}
+  m_LocalPosition: {x: 32.361107, y: -1.13839, z: 0}
+  m_LocalScale: {x: 2.1700325, y: 2.543265, z: 2.7231774}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 740052883}
+  m_Father: {fileID: 1388393815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &386447627
 SpriteRenderer:
@@ -905,8 +905,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 10.24, y: 5.76}
+  m_DrawMode: 2
+  m_Size: {x: 40, y: 2.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -923,7 +923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4c5467d209cb743bb31b069aeee5db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxMove
-  velMovi: {x: 0.9, y: 0}
+  velMovi: {x: 0.5, y: 0}
 --- !u!1 &480274791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,15 +1151,10 @@ Transform:
   m_GameObject: {fileID: 740052881}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.64482, y: -0.95, z: 0}
+  m_LocalPosition: {x: -0.64482, y: -0.9499999, z: 0}
   m_LocalScale: {x: 1.8839, y: 1.8839, z: 1.8839}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1415330434}
-  - {fileID: 114166689}
-  - {fileID: 1214297595}
-  - {fileID: 1773965454}
-  - {fileID: 386447626}
+  m_Children: []
   m_Father: {fileID: 1253781486}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &740052884
@@ -1171,10 +1166,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 740052881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f4c5467d209cb743bb31b069aeee5db, type: 3}
+  m_Script: {fileID: 11500000, guid: 6851b689336f2964f9e4732dacada03c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ParallaxMove
-  velMovi: {x: 0.05, y: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::FollowBackground
+  objetivo: {fileID: 480274794}
+  velocidad: 0.5
 --- !u!1 &837219405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1665,11 +1661,11 @@ Transform:
   m_GameObject: {fileID: 1214297594}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.2299999, y: 0.10000001, z: 0}
-  m_LocalScale: {x: 1.4455, y: 1.4455, z: 1.4455}
+  m_LocalPosition: {x: 32.361107, y: -1.13839, z: 0}
+  m_LocalScale: {x: 2.170032, y: 2.543265, z: 2.7231774}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 740052883}
+  m_Father: {fileID: 1388393815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1214297596
 SpriteRenderer:
@@ -1724,8 +1720,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 10.24, y: 5.76}
+  m_DrawMode: 2
+  m_Size: {x: 40, y: 2.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1742,7 +1738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4c5467d209cb743bb31b069aeee5db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxMove
-  velMovi: {x: 0.5, y: 0}
+  velMovi: {x: 0.3, y: 0}
 --- !u!1 &1215019889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,7 +1783,6 @@ Transform:
   m_Children:
   - {fileID: 1649669480}
   - {fileID: 1976674045}
-  - {fileID: 1253781486}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1253781485
@@ -1815,12 +1810,49 @@ Transform:
   m_GameObject: {fileID: 1253781485}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.64482, y: 1.8375599, z: 0}
+  m_LocalPosition: {x: 0.64482, y: 0.65756, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 740052883}
-  m_Father: {fileID: 1215019891}
+  - {fileID: 1388393815}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1388393814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1388393815}
+  m_Layer: 6
+  m_Name: Parallax
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1388393815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388393814}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1415330434}
+  - {fileID: 114166689}
+  - {fileID: 1214297595}
+  - {fileID: 1773965454}
+  - {fileID: 386447626}
+  m_Father: {fileID: 1253781486}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1415330433
 GameObject:
@@ -1849,11 +1881,11 @@ Transform:
   m_GameObject: {fileID: 1415330433}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.23, y: 0.1, z: 0}
-  m_LocalScale: {x: 1.4454999, y: 1.4455, z: 1.4455}
+  m_LocalPosition: {x: 32.361107, y: -1.13839, z: 0}
+  m_LocalScale: {x: 2.1700318, y: 2.543265, z: 2.7231774}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 740052883}
+  m_Father: {fileID: 1388393815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1415330435
 SpriteRenderer:
@@ -1908,8 +1940,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 10.24, y: 5.76}
+  m_DrawMode: 2
+  m_Size: {x: 40, y: 2.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -4656,11 +4688,11 @@ Transform:
   m_GameObject: {fileID: 1773965453}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.2299999, y: 0.10000001, z: 0}
-  m_LocalScale: {x: 1.4455, y: 1.4455, z: 1.4455}
+  m_LocalPosition: {x: 32.361107, y: -1.13839, z: 0}
+  m_LocalScale: {x: 2.170032, y: 2.543265, z: 2.7231774}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 740052883}
+  m_Father: {fileID: 1388393815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1773965455
 SpriteRenderer:
@@ -4715,8 +4747,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 10.24, y: 5.76}
+  m_DrawMode: 2
+  m_Size: {x: 40, y: 2.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -4733,7 +4765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4c5467d209cb743bb31b069aeee5db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxMove
-  velMovi: {x: 0.75, y: 0}
+  velMovi: {x: 0.4, y: 0}
 --- !u!1 &1852554099
 GameObject:
   m_ObjectHideFlags: 0
@@ -5966,6 +5998,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1686185376}
   - {fileID: 238507550}
+  - {fileID: 1253781486}
   - {fileID: 480274794}
   - {fileID: 1215019891}
   - {fileID: 341301460}
