@@ -22,6 +22,7 @@ public class IntroBoss : MonoBehaviour
 
         if (IABoss.Instance != null)
         {
+            SistemaCombate.Instance.IniciarCombate();
             IABoss.Instance.IniciarCombateBoss();
         }
     }

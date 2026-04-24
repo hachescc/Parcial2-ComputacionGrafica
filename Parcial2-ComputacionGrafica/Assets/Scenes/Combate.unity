@@ -1159,14 +1159,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 625665483}
+      - m_Target: {fileID: 625665487}
         m_TargetAssemblyTypeName: SistemaCombate, Assembly-CSharp
         m_MethodName: AtacarConHeroe
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1693,7 +1693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 625665481}
   - component: {fileID: 625665484}
-  - component: {fileID: 625665483}
+  - component: {fileID: 625665487}
   - component: {fileID: 625665482}
   - component: {fileID: 625665485}
   - component: {fileID: 625665486}
@@ -1733,27 +1733,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventario
   objetos: []
   dinero: 0
---- !u!114 &625665483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 625665480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26b3e1d576a0f2648a3cb36004ad4328, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SistemaCombate
-  heroes:
-  - {fileID: 1918877410}
-  - {fileID: 649157165}
-  - {fileID: 579721029}
-  - {fileID: 536599204}
-  enemigo: {fileID: 250305088}
-  nombreTurnoActual: 
-  resultadoUltimaAccion: 
-  combateActivo: 0
 --- !u!114 &625665484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1809,6 +1788,27 @@ MonoBehaviour:
   imagenCofre: {fileID: 1677804453}
   cantidadCofre: {fileID: 1754021587}
   textoDinero: {fileID: 1896903447}
+--- !u!114 &625665487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625665480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b3e1d576a0f2648a3cb36004ad4328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SistemaCombate
+  heroes:
+  - {fileID: 1918877410}
+  - {fileID: 649157165}
+  - {fileID: 579721029}
+  - {fileID: 536599204}
+  enemigo: {fileID: 250305088}
+  nombreTurnoActual: 
+  resultadoUltimaAccion: 
+  combateActivo: 0
 --- !u!1 &649157163
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,7 +2091,7 @@ MonoBehaviour:
   panelNotificacion: {fileID: 1150919181}
   textoInventario: {fileID: 826855410}
   panelInventario: {fileID: 1150919181}
-  sistemaCombate: {fileID: 625665483}
+  sistemaCombate: {fileID: 625665487}
 --- !u!114 &765602917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4470,14 +4470,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 625665483}
+      - m_Target: {fileID: 625665487}
         m_TargetAssemblyTypeName: SistemaCombate, Assembly-CSharp
         m_MethodName: AtacarConHeroe
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5334,7 +5334,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 625665483}
+      - m_Target: {fileID: 625665487}
         m_TargetAssemblyTypeName: SistemaCombate, Assembly-CSharp
         m_MethodName: AtacarConHeroe
         m_Mode: 3
@@ -5680,7 +5680,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Turno: Heroe 1'
+  m_Text: 'Turno:'
 --- !u!222 &2057644560
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5705,7 +5705,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25}
+  m_AnchoredPosition: {x: 0, y: -10}
   m_SizeDelta: {x: 400, y: 40}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1660057539 &9223372036854775807

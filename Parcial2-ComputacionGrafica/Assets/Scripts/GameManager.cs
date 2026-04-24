@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     public void RegistrarEnemigo(Personaje enemigo)
     {
         enemigoCombate = enemigo;

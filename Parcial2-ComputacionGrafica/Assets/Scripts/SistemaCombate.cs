@@ -21,21 +21,20 @@ public class SistemaCombate : MonoBehaviour
     public Stack<string> logAcciones = new Stack<string>();
 
     private Personaje personajeActual;
+   private bool combateInicializado = false;
 
-    void Awake()
+
+     void Start()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+
+        StartCoroutine(EsperarCargaEnemigo());
+
     }
 
     public void IniciarCombate()
     {
+        Debug.Log("ayuda");
+        
         colaTurnos.Clear();
 
         foreach (Personaje heroe in heroes)
@@ -56,6 +55,25 @@ public class SistemaCombate : MonoBehaviour
 
         StartCoroutine(SiguienteTurno());
     }
+
+
+IEnumerator EsperarCargaEnemigo()
+{
+    while (GameManager.Instance == null || GameManager.Instance.enemigoCombate == null)
+    {
+        yield return null;
+    }
+
+    heroes = GameManager.Instance.heroes;
+    enemigo = GameManager.Instance.enemigoCombate;
+
+    if (combateInicializado) yield break;
+
+    combateInicializado = true;
+    IniciarCombate();
+}
+
+
 
     public IEnumerator SiguienteTurno()
     {
