@@ -73,7 +73,7 @@ public class SistemaCombate : MonoBehaviour
 
         if (GameManager.Instance.prefabEnemigoCombate == null)
         {
-            GeneradorEncuentros generador = FindObjectOfType<GeneradorEncuentros>();
+            GeneradorEncuentros generador = FindFirstObjectByType<GeneradorEncuentros>();
             if (generador != null && generador.prefabsEnemigos != null && generador.prefabsEnemigos.Length > 0)
             {
                 GameObject fallback = generador.prefabsEnemigos[0];

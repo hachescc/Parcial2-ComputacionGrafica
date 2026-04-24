@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +22,10 @@ public class GameManager : MonoBehaviour
     public int heroesVivos;
     public string escenaRetornoCombate = "Juego";
 
-    private Vector3[] posicionesHeroesGuardadas = new Vector3[4];
+    private Dictionary<string, Vector3> posicionesHeroesPorNombre = new Dictionary<string, Vector3>();
+    private Vector3 posicionGrupoHeroesGuardada;
+    private bool hayPosicionGrupoGuardada;
+    private bool hayPosicionesHeroesGuardadas;
     private bool restaurarPosicionesPendiente;
 
     void Awake()
@@ -55,28 +60,97 @@ public class GameManager : MonoBehaviour
         }
 
         SincronizarHeroesConEscena();
-        GuardarPosicionesHeroes();
+        GuardarPosicionGrupoHeroes();
+        GuardarPosicionesHeroesEscena();
         restaurarPosicionesPendiente = true;
+        Debug.Log("Encuentro preparado. Escena retorno: " + escenaRetornoCombate);
     }
 
-    void GuardarPosicionesHeroes()
+    void GuardarPosicionGrupoHeroes()
     {
-        for (int i = 0; i < heroes.Length; i++)
+        GameObject grupoHeroes = GameObject.Find("Heroes");
+        if (grupoHeroes != null)
         {
-            if (heroes[i] != null)
+            posicionGrupoHeroesGuardada = grupoHeroes.transform.position;
+            hayPosicionGrupoGuardada = true;
+        }
+    }
+
+    void GuardarPosicionesHeroesEscena()
+    {
+        posicionesHeroesPorNombre.Clear();
+        hayPosicionesHeroesGuardadas = false;
+
+        string[] nombresHeroes = { "F.Heroe1", "F.Heroe2", "F.Heroe3", "F.Heroe4" };
+        foreach (string nombreHeroe in nombresHeroes)
+        {
+            GameObject heroeObj = GameObject.Find(nombreHeroe);
+            if (heroeObj == null) continue;
+
+            posicionesHeroesPorNombre[nombreHeroe] = heroeObj.transform.position;
+            hayPosicionesHeroesGuardadas = true;
+        }
+
+        Personaje[] personajesEscena = FindObjectsByType<Personaje>(FindObjectsSortMode.None);
+        foreach (Personaje personaje in personajesEscena)
+        {
+            if (personaje == null) continue;
+
+            string nombre = personaje.gameObject.name;
+            bool esHeroe = nombre.StartsWith("F.Heroe") || personaje.CompareTag("Player");
+            if (!esHeroe) continue;
+
+            string clave = nombre;
+            if (!posicionesHeroesPorNombre.ContainsKey(clave))
             {
-                posicionesHeroesGuardadas[i] = heroes[i].transform.position;
+                posicionesHeroesPorNombre.Add(clave, personaje.transform.position);
+                hayPosicionesHeroesGuardadas = true;
             }
         }
     }
 
-    void RestaurarPosicionesHeroes()
+    void RestaurarPosicionesHeroesEscena()
     {
-        for (int i = 0; i < heroes.Length; i++)
+        if (!hayPosicionesHeroesGuardadas) return;
+
+        string[] nombresHeroes = { "F.Heroe1", "F.Heroe2", "F.Heroe3", "F.Heroe4" };
+        foreach (string nombreHeroe in nombresHeroes)
         {
-            if (heroes[i] != null)
+            GameObject heroeObj = GameObject.Find(nombreHeroe);
+            if (heroeObj == null) continue;
+
+            Vector3 posicionGuardada;
+            if (!posicionesHeroesPorNombre.TryGetValue(nombreHeroe, out posicionGuardada)) continue;
+
+            heroeObj.transform.position = posicionGuardada;
+            Rigidbody2D rbHeroe = heroeObj.GetComponent<Rigidbody2D>();
+            if (rbHeroe != null)
             {
-                heroes[i].transform.position = posicionesHeroesGuardadas[i];
+                rbHeroe.position = new Vector2(posicionGuardada.x, posicionGuardada.y);
+                rbHeroe.linearVelocity = Vector2.zero;
+            }
+        }
+
+        Personaje[] personajesEscena = FindObjectsByType<Personaje>(FindObjectsSortMode.None);
+        foreach (Personaje personaje in personajesEscena)
+        {
+            if (personaje == null) continue;
+
+            string nombre = personaje.gameObject.name;
+            bool esHeroe = nombre.StartsWith("F.Heroe") || personaje.CompareTag("Player");
+            if (!esHeroe) continue;
+
+            Vector3 posicionGuardada;
+            if (posicionesHeroesPorNombre.TryGetValue(nombre, out posicionGuardada))
+            {
+                personaje.transform.position = posicionGuardada;
+
+                Rigidbody2D rb = personaje.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    rb.position = new Vector2(posicionGuardada.x, posicionGuardada.y);
+                    rb.linearVelocity = Vector2.zero;
+                }
             }
         }
     }
@@ -89,14 +163,42 @@ public class GameManager : MonoBehaviour
 
         if (restaurarPosicionesPendiente && scene.name == escenaRetornoCombate)
         {
-            RestaurarPosicionesHeroes();
             restaurarPosicionesPendiente = false;
+            StartCoroutine(RestaurarPosicionesAlFinalFrame());
+        }
+    }
+
+    IEnumerator RestaurarPosicionesAlFinalFrame()
+    {
+        yield return null;
+        yield return null;
+        Debug.Log("Iniciando restauracion de posiciones en escena: " + SceneManager.GetActiveScene().name);
+
+        // Reaplicamos varias veces para evitar que otro Start/Awake pise la posicion al volver de combate.
+        for (int i = 0; i < 8; i++)
+        {
+            RestaurarPosicionGrupoHeroes();
+            RestaurarPosicionesHeroesEscena();
+            yield return null;
+        }
+
+        Debug.Log("Restauracion de posiciones finalizada.");
+    }
+
+    void RestaurarPosicionGrupoHeroes()
+    {
+        if (!hayPosicionGrupoGuardada) return;
+
+        GameObject grupoHeroes = GameObject.Find("Heroes");
+        if (grupoHeroes != null)
+        {
+            grupoHeroes.transform.position = posicionGrupoHeroesGuardada;
         }
     }
 
     void SincronizarHeroesConEscena()
     {
-        Heroe[] heroesEscena = FindObjectsOfType<Heroe>();
+        Heroe[] heroesEscena = FindObjectsByType<Heroe>(FindObjectsSortMode.None);
         foreach (Heroe heroeComp in heroesEscena)
         {
             Personaje personaje = heroeComp.GetComponent<Personaje>();
