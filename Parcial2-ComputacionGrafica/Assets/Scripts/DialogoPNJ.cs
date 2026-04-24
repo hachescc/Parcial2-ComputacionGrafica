@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class DialogoPNJ : MonoBehaviour
 {
+    public Cinematicas cinematicas;
+    
     [Header("UI Dialogo")]
     public GameObject panelDialogo;
     public Text textoPNJ;
@@ -74,6 +76,7 @@ public class DialogoPNJ : MonoBehaviour
     {
         if (otro.CompareTag("Player"))
         {
+            cinematicas.StartCoroutine(cinematicas.StartCinematica());
             IniciarDialogo();
         }
     }

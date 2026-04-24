@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
             // Si destruimos el GameObject completo, rompemos botones y logica de combate.
             Destroy(this);
         }
+
     }
 
     void OnDestroy()
