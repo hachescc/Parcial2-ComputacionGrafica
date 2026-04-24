@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92b8a3f220a00c47ac2d38a029cf058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CambiadorEscena
-  nombreEscena: Boss
+  nombreEscena: Cueva
 --- !u!61 &837219407
 BoxCollider2D:
   m_ObjectHideFlags: 0
