@@ -94,17 +94,18 @@ public class SistemaCombate : MonoBehaviour
         // Si GameManager no tiene heroes validos (por cambio de escena), usamos los ya asignados en esta escena.
         if (GameManager.Instance.heroes != null && GameManager.Instance.heroes.Length > 0)
         {
-            bool tieneAlMenosUnHeroe = false;
+            bool tieneAlMenosUnHeroeVivo = false;
             for (int i = 0; i < GameManager.Instance.heroes.Length; i++)
             {
-                if (GameManager.Instance.heroes[i] != null)
+                Personaje heroe = GameManager.Instance.heroes[i];
+                if (heroe != null && heroe.estaVivo)
                 {
-                    tieneAlMenosUnHeroe = true;
+                    tieneAlMenosUnHeroeVivo = true;
                     break;
                 }
             }
 
-            if (tieneAlMenosUnHeroe)
+            if (tieneAlMenosUnHeroeVivo)
             {
                 heroes = GameManager.Instance.heroes;
             }
@@ -267,7 +268,7 @@ public class SistemaCombate : MonoBehaviour
                 }
             }
 
-            if (GameManager.Instance != null && GameManager.Instance.TodosLoHeroesMuertos())
+            if (TodosMuertos())
             {
                 combateActivo = false;
                 RegistrarAccion(resultadoUltimaAccion);
@@ -306,7 +307,12 @@ public class SistemaCombate : MonoBehaviour
         if (victoria)
         {
             Debug.Log("Victoria - volviendo al bosque");
-            SceneManager.LoadScene("Juego");
+            string escenaRetorno = "Juego";
+            if (GameManager.Instance != null && !string.IsNullOrEmpty(GameManager.Instance.escenaRetornoCombate))
+            {
+                escenaRetorno = GameManager.Instance.escenaRetornoCombate;
+            }
+            SceneManager.LoadScene(escenaRetorno);
         }
         else
         {

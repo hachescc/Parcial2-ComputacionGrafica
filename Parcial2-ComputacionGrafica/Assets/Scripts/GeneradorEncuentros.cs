@@ -55,10 +55,15 @@ public class GeneradorEncuentros : MonoBehaviour
         // Elegir enemigo aleatorio entre los 4 tipos
         int tipoEnemigo = Random.Range(0, 4);
 
-        if (GameManager.Instance != null && prefabsEnemigos[tipoEnemigo] != null)
+        if (GameManager.Instance != null)
         {
-            // Guardamos el prefab para instanciarlo dentro de la escena de combate.
-            GameManager.Instance.RegistrarPrefabEnemigo(prefabsEnemigos[tipoEnemigo]);
+            GameManager.Instance.PrepararEncuentro(SceneManager.GetActiveScene().name);
+
+            if (prefabsEnemigos[tipoEnemigo] != null)
+            {
+                // Guardamos el prefab para instanciarlo dentro de la escena de combate.
+                GameManager.Instance.RegistrarPrefabEnemigo(prefabsEnemigos[tipoEnemigo]);
+            }
         }
 
         Debug.Log("Encuentro iniciado - cargando combate");

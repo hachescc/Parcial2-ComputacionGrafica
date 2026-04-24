@@ -13,26 +13,30 @@ public class Heroe : MonoBehaviour
         switch (numeroHeroe)
         {
             case 1:
-                personaje.nombre = "Héroe 1";
+                personaje.nombre = "Heroe 1";
                 personaje.fuerza = 19;
                 personaje.resistencia = 68;
                 break;
             case 2:
-                personaje.nombre = "Héroe 2";
+                personaje.nombre = "Heroe 2";
                 personaje.fuerza = 23;
                 personaje.resistencia = 87;
                 break;
             case 3:
-                personaje.nombre = "Héroe 3";
+                personaje.nombre = "Heroe 3";
                 personaje.fuerza = 17;
                 personaje.resistencia = 50;
                 break;
             case 4:
-                personaje.nombre = "Héroe 4";
+                personaje.nombre = "Heroe 4";
                 personaje.fuerza = 16;
                 personaje.resistencia = 38;
                 break;
         }
+
+        // Recalcular estado despues de asignar resistencia para evitar vida 0 por orden de Awake.
+        personaje.saludActual = personaje.resistencia;
+        personaje.estaVivo = true;
     }
 
     public int Atacar(int indiceAtaque)
