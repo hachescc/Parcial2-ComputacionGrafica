@@ -642,8 +642,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84cb133875599745bd5a88abc2cad5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GeneradorEncuentros
-  probabilidadEncuentro: 0.3
-  tiempoEntreEncuentros: 5
+  probabilidadEncuentro: 0.4
+  tiempoEntreEncuentros: 4
   prefabsEnemigos:
   - {fileID: 990571306597761309, guid: c83b8633894d3b1408ae4be2d6cb4921, type: 3}
   - {fileID: 2650061790523467489, guid: 195d14725ba56384397f012e2c51b20f, type: 3}
@@ -1169,8 +1169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6851b689336f2964f9e4732dacada03c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FollowBackground
-  objetivo: {fileID: 480274794}
-  velocidad: 0.5
 --- !u!1 &837219405
 GameObject:
   m_ObjectHideFlags: 0

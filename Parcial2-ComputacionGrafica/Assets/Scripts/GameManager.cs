@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [Header("Personajes")]
     public Personaje[] heroes = new Personaje[4];
     public Personaje enemigoCombate;
+    public GameObject prefabEnemigoCombate;
     public Personaje lupus;
     public Personaje helena;
 
@@ -26,8 +27,15 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            // Importante: en escenas como Combate este componente puede vivir junto a HUD/SistemaCombate.
+            // Si destruimos el GameObject completo, rompemos botones y logica de combate.
+            Destroy(this);
         }
+    }
+
+    public void RegistrarPrefabEnemigo(GameObject prefabEnemigo)
+    {
+        prefabEnemigoCombate = prefabEnemigo;
     }
 
 

@@ -33,6 +33,10 @@ public class EnemigoBosque : MonoBehaviour
                 personaje.resistencia = 35;
                 break;
         }
+
+        // Recalcular estado despues de asignar resistencia para evitar enemigos con vida 0.
+        personaje.saludActual = personaje.resistencia;
+        personaje.estaVivo = true;
     }
 
     public int Atacar()

@@ -10,6 +10,7 @@ public class SistemaCombate : MonoBehaviour
     [Header("Participantes")]
     public Personaje[] heroes = new Personaje[4];
     public Personaje enemigo;
+    public Transform puntoSpawnEnemigo;
 
     [Header("Estado del combate")]
     public string nombreTurnoActual;
@@ -21,20 +22,20 @@ public class SistemaCombate : MonoBehaviour
     public Stack<string> logAcciones = new Stack<string>();
 
     private Personaje personajeActual;
-   private bool combateInicializado = false;
+    private bool combateInicializado = false;
 
-
-     void Start()
+    void Awake()
     {
+        Instance = this;
+    }
 
+    void Start()
+    {
         StartCoroutine(EsperarCargaEnemigo());
-
     }
 
     public void IniciarCombate()
     {
-        Debug.Log("ayuda");
-        
         colaTurnos.Clear();
 
         foreach (Personaje heroe in heroes)
@@ -56,24 +57,93 @@ public class SistemaCombate : MonoBehaviour
         StartCoroutine(SiguienteTurno());
     }
 
-
-IEnumerator EsperarCargaEnemigo()
-{
-    while (GameManager.Instance == null || GameManager.Instance.enemigoCombate == null)
+    IEnumerator EsperarCargaEnemigo()
     {
-        yield return null;
+        while (GameManager.Instance == null)
+        {
+            yield return null;
+        }
+
+        float tiempoEspera = 0f;
+        while (GameManager.Instance.prefabEnemigoCombate == null && tiempoEspera < 2f)
+        {
+            tiempoEspera += Time.deltaTime;
+            yield return null;
+        }
+
+        if (GameManager.Instance.prefabEnemigoCombate == null)
+        {
+            GeneradorEncuentros generador = FindObjectOfType<GeneradorEncuentros>();
+            if (generador != null && generador.prefabsEnemigos != null && generador.prefabsEnemigos.Length > 0)
+            {
+                GameObject fallback = generador.prefabsEnemigos[0];
+                if (fallback != null)
+                {
+                    GameManager.Instance.RegistrarPrefabEnemigo(fallback);
+                    Debug.LogWarning("Se uso prefab enemigo de respaldo desde GeneradorEncuentros.");
+                }
+            }
+        }
+
+        if (GameManager.Instance.prefabEnemigoCombate == null)
+        {
+            Debug.LogError("No hay prefab enemigo disponible para iniciar combate.");
+            yield break;
+        }
+
+        // Si GameManager no tiene heroes validos (por cambio de escena), usamos los ya asignados en esta escena.
+        if (GameManager.Instance.heroes != null && GameManager.Instance.heroes.Length > 0)
+        {
+            bool tieneAlMenosUnHeroe = false;
+            for (int i = 0; i < GameManager.Instance.heroes.Length; i++)
+            {
+                if (GameManager.Instance.heroes[i] != null)
+                {
+                    tieneAlMenosUnHeroe = true;
+                    break;
+                }
+            }
+
+            if (tieneAlMenosUnHeroe)
+            {
+                heroes = GameManager.Instance.heroes;
+            }
+        }
+
+        Vector3 posicionSpawn = transform.position;
+        Quaternion rotacionSpawn = Quaternion.identity;
+
+        if (enemigo != null)
+        {
+            // Si hay placeholder de enemigo en escena, usamos su posicion para no aparecer fuera de camara.
+            posicionSpawn = enemigo.transform.position;
+            rotacionSpawn = enemigo.transform.rotation;
+            Destroy(enemigo.gameObject);
+        }
+
+        if (puntoSpawnEnemigo != null)
+        {
+            posicionSpawn = puntoSpawnEnemigo.position;
+            rotacionSpawn = puntoSpawnEnemigo.rotation;
+        }
+
+        GameObject enemigoObj = Instantiate(GameManager.Instance.prefabEnemigoCombate, posicionSpawn, rotacionSpawn);
+        enemigo = enemigoObj.GetComponent<Personaje>();
+        Debug.Log("Enemigo instanciado en combate: " + enemigoObj.name + " en posicion " + posicionSpawn);
+
+        if (enemigo == null)
+        {
+            Debug.LogError("El prefab del enemigo no tiene componente Personaje.");
+            yield break;
+        }
+
+        GameManager.Instance.RegistrarEnemigo(enemigo);
+
+        if (combateInicializado) yield break;
+
+        combateInicializado = true;
+        IniciarCombate();
     }
-
-    heroes = GameManager.Instance.heroes;
-    enemigo = GameManager.Instance.enemigoCombate;
-
-    if (combateInicializado) yield break;
-
-    combateInicializado = true;
-    IniciarCombate();
-}
-
-
 
     public IEnumerator SiguienteTurno()
     {
@@ -111,7 +181,7 @@ IEnumerator EsperarCargaEnemigo()
 
         if (tiradaExito <= 3)
         {
-            resultadoUltimaAccion = "Error — " + personajeActual.nombre + " fallo el ataque";
+            resultadoUltimaAccion = "Error - " + personajeActual.nombre + " fallo el ataque";
             RegistrarAccion(resultadoUltimaAccion);
             Debug.Log(resultadoUltimaAccion);
             if (HUDController.Instance != null)
@@ -129,7 +199,7 @@ IEnumerator EsperarCargaEnemigo()
         if (evaluacion == "Dano")
         {
             enemigo.getDamage(25);
-            resultadoUltimaAccion = "Dano — " + personajeActual.nombre + " hizo 25 de dano";
+            resultadoUltimaAccion = "Dano - " + personajeActual.nombre + " hizo 25 de dano";
             if (GestorAudio.Instance != null)
                 GestorAudio.Instance.ReproducirEfecto("ataque");
 
@@ -150,7 +220,7 @@ IEnumerator EsperarCargaEnemigo()
         }
         else
         {
-            resultadoUltimaAccion = evaluacion + " — " + personajeActual.nombre;
+            resultadoUltimaAccion = evaluacion + " - " + personajeActual.nombre;
         }
 
         RegistrarAccion(resultadoUltimaAccion);
@@ -168,7 +238,7 @@ IEnumerator EsperarCargaEnemigo()
 
         if (tiradaExito <= 3)
         {
-            resultadoUltimaAccion = "Error — " + enemigo.nombre + " fallo el ataque";
+            resultadoUltimaAccion = "Error - " + enemigo.nombre + " fallo el ataque";
             RegistrarAccion(resultadoUltimaAccion);
             Debug.Log(resultadoUltimaAccion);
             if (HUDController.Instance != null)
@@ -190,7 +260,7 @@ IEnumerator EsperarCargaEnemigo()
                 if (heroe != null && heroe.estaVivo)
                 {
                     heroe.getDamage(25);
-                    resultadoUltimaAccion = "Dano — " + enemigo.nombre + " hizo 25 de dano a " + heroe.nombre;
+                    resultadoUltimaAccion = "Dano - " + enemigo.nombre + " hizo 25 de dano a " + heroe.nombre;
                     if (GestorAudio.Instance != null)
                         GestorAudio.Instance.ReproducirEfecto("dano");
                     break;
@@ -209,7 +279,7 @@ IEnumerator EsperarCargaEnemigo()
         }
         else
         {
-            resultadoUltimaAccion = evaluacion + " — " + enemigo.nombre;
+            resultadoUltimaAccion = evaluacion + " - " + enemigo.nombre;
         }
 
         RegistrarAccion(resultadoUltimaAccion);
@@ -235,12 +305,12 @@ IEnumerator EsperarCargaEnemigo()
 
         if (victoria)
         {
-            Debug.Log("Victoria — volviendo al bosque");
+            Debug.Log("Victoria - volviendo al bosque");
             SceneManager.LoadScene("Juego");
         }
         else
         {
-            Debug.Log("Derrota — Game Over");
+            Debug.Log("Derrota - Game Over");
             SceneManager.LoadScene("Menu");
         }
     }
@@ -288,24 +358,20 @@ IEnumerator EsperarCargaEnemigo()
         return "";
     }
 
-       void EntregarDropsYNotificar()
+    void EntregarDropsYNotificar()
     {
-       
         if (GameManager.Instance == null) return;
         Inventario inv = GameManager.Instance.inventario;
         if (inv == null) return;
 
-        
         int tiposPrevios = inv.cantidades.Count;
 
-       
         EnemigoBosque enemigoScript = enemigo.GetComponent<EnemigoBosque>();
         if (enemigoScript != null)
         {
             enemigoScript.EntregarDrops();
         }
 
-        
         if (inv.cantidades.Count > tiposPrevios)
         {
             StartCoroutine(NotificacionObjetoNuevo());
@@ -314,7 +380,6 @@ IEnumerator EsperarCargaEnemigo()
 
     IEnumerator NotificacionObjetoNuevo()
     {
-        
         yield return new WaitForSeconds(2.5f);
         if (HUDController.Instance != null)
         {

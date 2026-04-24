@@ -15,6 +15,12 @@ public class GeneradorEncuentros : MonoBehaviour
 
     void Start()
     {
+        if (SceneManager.GetActiveScene().name == "Combate")
+        {
+            enabled = false;
+            return;
+        }
+
         timerEncuentro = tiempoEntreEncuentros;
         encuentroActivo = false;
     }
@@ -51,16 +57,11 @@ public class GeneradorEncuentros : MonoBehaviour
 
         if (GameManager.Instance != null && prefabsEnemigos[tipoEnemigo] != null)
         {
-            GameObject enemigoObj = Instantiate(prefabsEnemigos[tipoEnemigo]);
-            Personaje personajeEnemigo = enemigoObj.GetComponent<Personaje>();
-
-            if (personajeEnemigo != null)
-            {
-                GameManager.Instance.RegistrarEnemigo(personajeEnemigo);
-            }
+            // Guardamos el prefab para instanciarlo dentro de la escena de combate.
+            GameManager.Instance.RegistrarPrefabEnemigo(prefabsEnemigos[tipoEnemigo]);
         }
 
-        Debug.Log("Encuentro iniciado — cargando combate");
+        Debug.Log("Encuentro iniciado - cargando combate");
         SceneManager.LoadScene("Combate");
     }
 
