@@ -346,7 +346,7 @@ public class SistemaCombate : MonoBehaviour
     public string EvaluarDano(int tirada)
     {
         if (tirada >= 90) return "Pifia";
-        if (tirada >= 50) return "Dano";
+        if (tirada >= 35) return "Dano";
         return "Fallo";
     }
 
