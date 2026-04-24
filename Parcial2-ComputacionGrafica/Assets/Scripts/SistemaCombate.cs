@@ -125,6 +125,7 @@ public class SistemaCombate : MonoBehaviour
                     HUDController.Instance.MostrarNotificacion(resultadoUltimaAccion);
                 if (GestorAudio.Instance != null)
                     GestorAudio.Instance.ReproducirEfecto("muerte");
+                EntregarDropsYNotificar();
                 StartCoroutine(TerminarCombate(true));
                 return;
             }
@@ -267,5 +268,41 @@ public class SistemaCombate : MonoBehaviour
             return logAcciones.Peek();
         }
         return "";
+    }
+
+       void EntregarDropsYNotificar()
+    {
+       
+        if (GameManager.Instance == null) return;
+        Inventario inv = GameManager.Instance.inventario;
+        if (inv == null) return;
+
+        
+        int tiposPrevios = inv.cantidades.Count;
+
+       
+        EnemigoBosque enemigoScript = enemigo.GetComponent<EnemigoBosque>();
+        if (enemigoScript != null)
+        {
+            enemigoScript.EntregarDrops();
+        }
+
+        
+        if (inv.cantidades.Count > tiposPrevios)
+        {
+            StartCoroutine(NotificacionObjetoNuevo());
+        }
+    }
+
+    IEnumerator NotificacionObjetoNuevo()
+    {
+        
+        yield return new WaitForSeconds(2.5f);
+        if (HUDController.Instance != null)
+        {
+            HUDController.Instance.MostrarNotificacion(
+                "Has obtenido un nuevo objeto.\nRevisa tu inventario (I)"
+            );
+        }
     }
 }
