@@ -21,8 +21,9 @@ public class GameManager : MonoBehaviour
     public bool combateConBoss;
     public int heroesVivos;
     public string escenaRetornoCombate = "Juego";
+    public string nombreContenedorHeroes = "Heroes";
 
-    private Dictionary<string, Vector3> posicionesHeroesPorNombre = new Dictionary<string, Vector3>();
+    private Dictionary<int, Vector3> posicionesLocalesHeroesPorIndice = new Dictionary<int, Vector3>();
     private Vector3 posicionGrupoHeroesGuardada;
     private bool hayPosicionGrupoGuardada;
     private bool hayPosicionesHeroesGuardadas;
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     void GuardarPosicionGrupoHeroes()
     {
-        GameObject grupoHeroes = GameObject.Find("Heroes");
+        GameObject grupoHeroes = BuscarContenedorHeroes();
         if (grupoHeroes != null)
         {
             posicionGrupoHeroesGuardada = grupoHeroes.transform.position;
@@ -78,34 +79,28 @@ public class GameManager : MonoBehaviour
 
     void GuardarPosicionesHeroesEscena()
     {
-        posicionesHeroesPorNombre.Clear();
+        posicionesLocalesHeroesPorIndice.Clear();
         hayPosicionesHeroesGuardadas = false;
 
-        string[] nombresHeroes = { "F.Heroe1", "F.Heroe2", "F.Heroe3", "F.Heroe4" };
-        foreach (string nombreHeroe in nombresHeroes)
+        GameObject grupoHeroes = BuscarContenedorHeroes();
+        Transform raiz = grupoHeroes != null ? grupoHeroes.transform : null;
+
+        Heroe[] heroesEscena = FindObjectsByType<Heroe>(FindObjectsSortMode.None);
+        foreach (Heroe heroeComp in heroesEscena)
         {
-            GameObject heroeObj = GameObject.Find(nombreHeroe);
-            if (heroeObj == null) continue;
+            if (heroeComp == null) continue;
 
-            posicionesHeroesPorNombre[nombreHeroe] = heroeObj.transform.position;
-            hayPosicionesHeroesGuardadas = true;
-        }
+            int indice = heroeComp.numeroHeroe - 1;
+            if (indice < 0 || indice >= heroes.Length) continue;
 
-        Personaje[] personajesEscena = FindObjectsByType<Personaje>(FindObjectsSortMode.None);
-        foreach (Personaje personaje in personajesEscena)
-        {
-            if (personaje == null) continue;
-
-            string nombre = personaje.gameObject.name;
-            bool esHeroe = nombre.StartsWith("F.Heroe") || personaje.CompareTag("Player");
-            if (!esHeroe) continue;
-
-            string clave = nombre;
-            if (!posicionesHeroesPorNombre.ContainsKey(clave))
+            Vector3 posicionLocal = heroeComp.transform.localPosition;
+            if (raiz != null && heroeComp.transform.parent != raiz)
             {
-                posicionesHeroesPorNombre.Add(clave, personaje.transform.position);
-                hayPosicionesHeroesGuardadas = true;
+                posicionLocal = raiz.InverseTransformPoint(heroeComp.transform.position);
             }
+
+            posicionesLocalesHeroesPorIndice[indice] = posicionLocal;
+            hayPosicionesHeroesGuardadas = true;
         }
     }
 
@@ -113,44 +108,34 @@ public class GameManager : MonoBehaviour
     {
         if (!hayPosicionesHeroesGuardadas) return;
 
-        string[] nombresHeroes = { "F.Heroe1", "F.Heroe2", "F.Heroe3", "F.Heroe4" };
-        foreach (string nombreHeroe in nombresHeroes)
+        Heroe[] heroesEscena = FindObjectsByType<Heroe>(FindObjectsSortMode.None);
+        foreach (Heroe heroeComp in heroesEscena)
         {
-            GameObject heroeObj = GameObject.Find(nombreHeroe);
-            if (heroeObj == null) continue;
+            if (heroeComp == null) continue;
 
-            Vector3 posicionGuardada;
-            if (!posicionesHeroesPorNombre.TryGetValue(nombreHeroe, out posicionGuardada)) continue;
+            int indice = heroeComp.numeroHeroe - 1;
+            if (indice < 0 || indice >= heroes.Length) continue;
 
-            heroeObj.transform.position = posicionGuardada;
-            Rigidbody2D rbHeroe = heroeObj.GetComponent<Rigidbody2D>();
-            if (rbHeroe != null)
+            Vector3 posicionLocalGuardada;
+            if (!posicionesLocalesHeroesPorIndice.TryGetValue(indice, out posicionLocalGuardada)) continue;
+
+            Transform parent = heroeComp.transform.parent;
+            if (parent != null)
             {
-                rbHeroe.position = new Vector2(posicionGuardada.x, posicionGuardada.y);
-                rbHeroe.linearVelocity = Vector2.zero;
+                heroeComp.transform.localPosition = posicionLocalGuardada;
             }
-        }
-
-        Personaje[] personajesEscena = FindObjectsByType<Personaje>(FindObjectsSortMode.None);
-        foreach (Personaje personaje in personajesEscena)
-        {
-            if (personaje == null) continue;
-
-            string nombre = personaje.gameObject.name;
-            bool esHeroe = nombre.StartsWith("F.Heroe") || personaje.CompareTag("Player");
-            if (!esHeroe) continue;
-
-            Vector3 posicionGuardada;
-            if (posicionesHeroesPorNombre.TryGetValue(nombre, out posicionGuardada))
+            else
             {
-                personaje.transform.position = posicionGuardada;
+                heroeComp.transform.position = posicionLocalGuardada;
+            }
 
-                Rigidbody2D rb = personaje.GetComponent<Rigidbody2D>();
-                if (rb != null)
-                {
-                    rb.position = new Vector2(posicionGuardada.x, posicionGuardada.y);
-                    rb.linearVelocity = Vector2.zero;
-                }
+            Vector3 posicionMundo = heroeComp.transform.position;
+
+            Rigidbody2D rb = heroeComp.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.position = new Vector2(posicionMundo.x, posicionMundo.y);
+                rb.linearVelocity = Vector2.zero;
             }
         }
     }
@@ -170,8 +155,15 @@ public class GameManager : MonoBehaviour
 
     IEnumerator RestaurarPosicionesAlFinalFrame()
     {
-        yield return null;
-        yield return null;
+        int esperaMaximaFrames = 60;
+        int framesEsperados = 0;
+        while (BuscarContenedorHeroes() == null && framesEsperados < esperaMaximaFrames)
+        {
+            framesEsperados++;
+            yield return null;
+        }
+
+        yield return new WaitForEndOfFrame();
         Debug.Log("Iniciando restauracion de posiciones en escena: " + SceneManager.GetActiveScene().name);
 
         // Reaplicamos varias veces para evitar que otro Start/Awake pise la posicion al volver de combate.
@@ -189,11 +181,28 @@ public class GameManager : MonoBehaviour
     {
         if (!hayPosicionGrupoGuardada) return;
 
-        GameObject grupoHeroes = GameObject.Find("Heroes");
+        GameObject grupoHeroes = BuscarContenedorHeroes();
         if (grupoHeroes != null)
         {
             grupoHeroes.transform.position = posicionGrupoHeroesGuardada;
         }
+    }
+
+    GameObject BuscarContenedorHeroes()
+    {
+        GameObject grupoHeroes = GameObject.Find(nombreContenedorHeroes);
+        if (grupoHeroes != null) return grupoHeroes;
+
+        Heroe[] heroesEscena = FindObjectsByType<Heroe>(FindObjectsSortMode.None);
+        foreach (Heroe heroeComp in heroesEscena)
+        {
+            if (heroeComp != null && heroeComp.transform.parent != null)
+            {
+                return heroeComp.transform.parent.gameObject;
+            }
+        }
+
+        return null;
     }
 
     void SincronizarHeroesConEscena()
@@ -239,4 +248,4 @@ public class GameManager : MonoBehaviour
         ActualizarHeroesVivos();
         return heroesVivos == 0;
     }
-}   
+}
